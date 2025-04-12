@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HandWrite OCR - Extract Text from Handwritten Documents</title>
+    <link rel="stylesheet" href="{% static 'ocr_app/css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="description" content="Extract text from handwritten documents and images using advanced OCR technology. Preserve table structures and formatting.">
+</head>
+<body>
+    <div class="header">
+        <h1>HandWrite OCR</h1>
+        <p class="subtitle">Extract text from handwritten documents with AI-powered technology</p>
+    </div>
+    
+    <div class="container">
+        <div class="upload-area" id="dropArea">
+            <i class="fa-solid fa-file-arrow-up upload-icon"></i>
+            <p>Drag & Drop images or PDF files here<br>or click to select files</p>
+        </div>
+        
+        <div class="supported-formats">
+            <i class="fa-solid fa-circle-info"></i> Supported formats: JPG, JPEG, PNG, BMP, TIFF, PDF
+        </div>
+        
+        <div class="buttons">
+            {% csrf_token %}
+            <input type="file" id="fileInput" accept=".jpg,.jpeg,.png,.bmp,.tiff,.tif,.pdf">
+            <button class="btn" id="uploadBtn">
+                <i class="fa-solid fa-folder-open"></i> Browse Files
+            </button>
+            <button class="btn" id="processBtn" disabled>
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Extract Text
+            </button>
+            <button class="btn" id="copyBtn">
+                <i class="fa-solid fa-copy"></i> Copy Text
+            </button>
+        </div>
+        
+        <div class="loader" id="loader"></div>
+        
+        <div class="result-container">
+            <div class="result-header">
+                <h3>Extracted Text</h3>
+                <span id="status"></span>
+            </div>
+            <div id="result">Your extracted text will appear here</div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Powered by Tesseract OCR & Computer Vision Technology</p>
+        <p><a href="hhttps://github.com/Neerajsainii/handwritten_data_extractor" target="_blank"><i class="fa-brands fa-github"></i> View on GitHub</a></p>
+    </footer>
+
+    <script src="{% static 'ocr_app/js/main.js' %}"></script>
+</body>
+</html> 
