@@ -32,7 +32,7 @@ HandWrite OCR is a web application that extracts text from images and PDF files,
 
 ```bash
 git clone https://github.com/Neerajsainii/handwritten_data_extractor.git
-cd handwrite-ocr
+cd handwritten_data_extractor
 ```
 
 ### Step 2: Create and activate a virtual environment
@@ -81,19 +81,38 @@ Sign up for a free account at [render.com](https://render.com).
 
 1. Click "New" and select "Web Service"
 2. Connect your GitHub repository
-3. Give your service a name
+3. Give your service a name (e.g. "handwritten-data-extractor")
 4. Select "Python 3" as the environment
-5. Set the build command: `pip install -r requirements.txt && python manage.py collectstatic --noinput`
-6. Set the start command: `gunicorn ocr_project.wsgi:application`
+5. Set the build command to:
+   ```
+   ./build.sh
+   ```
+6. Set the start command to:
+   ```
+   gunicorn ocr_project.wsgi:application --bind 0.0.0.0:$PORT
+   ```
 7. Add the following environment variables:
-   - `PYTHON_VERSION`: 3.10.0
+   - `PYTHON_VERSION`: 3.11.0
    - `DEBUG`: False
-   - `ALLOWED_HOSTS`: .render.com,localhost
-   - `SECRET_KEY`: your_secret_key
+   - `PORT`: 10000
+   - `ALLOWED_HOSTS`: handwritten-data-extractor.onrender.com,localhost,127.0.0.1
+   - `SECRET_KEY`: (generate a secret key and add it here)
 
-### Step 3: Install additional dependencies on Render
+### Step 3: Deploy your application
 
-For PDF processing, Render may need additional packages. You can add apt packages in the Render dashboard under "Environment" → "Advanced" → "Clear Build Cache & Deploy with Apt Packages": `tesseract-ocr libgl1-mesa-glx libsm6 libxext6 poppler-utils`
+Click "Create Web Service" and wait for the deployment to complete. Render will run the build script to install all necessary dependencies and then start your application.
+
+Your application should be accessible at https://handwritten-data-extractor.onrender.com (or whatever name you chose).
+
+### Troubleshooting Render Deployment
+
+If you encounter any issues:
+
+1. Check the deployment logs in Render dashboard
+2. Make sure all required environment variables are set
+3. Verify that the build.sh script is executable
+4. Ensure Tesseract and other dependencies are correctly installed
+5. Check that your application is listening on the port specified by Render (10000 by default)
 
 ## Usage
 

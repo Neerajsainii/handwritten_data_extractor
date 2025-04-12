@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 import sys
+import socket  # For getting the hostname
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +28,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-s1xha%a2++%7wqd#d+(5=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,handwritten-data-extractor.onrender.com').split(',')
 
 
 # Application definition
@@ -58,6 +59,7 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://127.0.0.1:8000",
+    "https://handwritten-data-extractor.onrender.com",
 ]
 
 if not DEBUG:
@@ -153,10 +155,12 @@ TESSERACT_CMD = os.environ.get('TESSERACT_CMD', r"C:\Program Files\Tesseract-OCR
 # Detect if running on Render.com
 ON_RENDER = 'RENDER' in os.environ
 
-# If on Render, use their Tesseract path
+# If on Render, ensure we listen on the port Render expects
 if ON_RENDER:
     TESSERACT_CMD = '/usr/bin/tesseract'
-    
+    # Listen on port 10000 (Render's expected port)
+    os.environ.setdefault('PORT', '10000')
+
 # Maximum file upload size - 10MB
 DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024
 
