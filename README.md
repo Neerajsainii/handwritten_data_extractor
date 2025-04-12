@@ -31,7 +31,7 @@ HandWrite OCR is a web application that extracts text from images and PDF files,
 ### Step 1: Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/handwrite-ocr.git
+git clone https://github.com/Neerajsainii/handwritten_data_extractor.git
 cd handwrite-ocr
 ```
 
